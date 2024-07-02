@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	dateAndTime "github.com/codescalersinternships/DateTime-Server-Mariam_Mahrous/pkg"
+	dateAndTime "github.com/codescalersinternships/DateTime-Server-Mariam_Mahrous/pkg/http"
 	"net/http"
 )
 
