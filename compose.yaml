@@ -1,0 +1,14 @@
+version: '2'
+services:
+  http:
+    build: 
+      dockerfile: Dockerfile.http
+    image: http-server
+    ports:
+      - "8080:8080"
+  gin:
+    build:
+      dockerfile: Dockerfile.gin
+    image: gin-server
+    ports: 
+      - "8000:8000"
