@@ -7,13 +7,14 @@ import (
 	"time"
 )
 
+// A struct that has Time and Date
 type DateAndTime struct {
 	Date string `json:"date"`
 	Time string `json:"time"`
 }
 
+// An api that returns the current date and time
 func GetDateAndTime(w http.ResponseWriter, r *http.Request) {
-
 	if r.URL.Path != "/datetime" {
 		http.Error(w, fmt.Sprintf("invalid Request URI: %s", r.RequestURI), http.StatusNotFound)
 		return
