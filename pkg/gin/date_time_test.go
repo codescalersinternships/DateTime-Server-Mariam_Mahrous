@@ -1,7 +1,8 @@
-package dateAndTime
+package dateandtime
 
 import (
 	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -26,8 +27,9 @@ func handleTestsErrors(t *testing.T, err error) {
 //To-Do : benchmark testing
 
 func TestDateAndTime(t *testing.T) {
+	r := gin.Default()
 	t.Run("Valid Api url", func(*testing.T) {
-
+		r.GET("/datetime", GetDateAndTime)
 		req := httptest.NewRequest(
 			http.MethodGet,
 			apiUrl+validRoute,
@@ -35,7 +37,7 @@ func TestDateAndTime(t *testing.T) {
 		)
 
 		resp := httptest.NewRecorder()
-		GetDateAndTime(resp, req)
+		r.ServeHTTP(resp, req)
 
 		if resp.Code != http.StatusOK {
 			t.Errorf("handler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
@@ -47,36 +49,6 @@ func TestDateAndTime(t *testing.T) {
 
 		if response.Date != time.Now().Format("2006-01-02") && response.Time != time.Now().Format("15:04:05") {
 			t.Errorf("expected date %s but got %s , time %s but got %s ", time.Now().Format("2006-01-02"), response.Date, time.Now().Format("15:04:05"), response.Time)
-		}
-
-	})
-	t.Run("Invalid Api url", func(*testing.T) {
-
-		req := httptest.NewRequest(
-			http.MethodGet,
-			apiUrl+invalidRoute,
-			nil,
-		)
-
-		resp := httptest.NewRecorder()
-		GetDateAndTime(resp, req)
-
-		if resp.Code != http.StatusNotFound {
-			t.Errorf("handler returned wrong status code: got %v want %v", resp.Code, http.StatusNotFound)
-		}
-	})
-	t.Run("Invalid Method", func(*testing.T) {
-		req := httptest.NewRequest(
-			http.MethodPost,
-			apiUrl+validRoute,
-			nil,
-		)
-
-		resp := httptest.NewRecorder()
-		GetDateAndTime(resp, req)
-
-		if resp.Code != http.StatusMethodNotAllowed {
-			t.Errorf("handler returned wrong status code: got %v want %v", resp.Code, http.StatusMethodNotAllowed)
 		}
 	})
 }

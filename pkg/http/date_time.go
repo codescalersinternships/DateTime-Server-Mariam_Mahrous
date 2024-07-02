@@ -12,7 +12,6 @@ type DateAndTime struct {
 	Time string `json:"time"`
 }
 
-
 func GetDateAndTime(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path != "/datetime" {
@@ -25,7 +24,7 @@ func GetDateAndTime(w http.ResponseWriter, r *http.Request) {
 
 	currentDate := time.Now().Format("2006-01-02")
 	currentTime := time.Now().Format("15:04:05")
-	response := DateAndTime{Date: currentDate , Time: currentTime}
+	response := DateAndTime{Date: currentDate, Time: currentTime}
 	err := json.NewEncoder(w).Encode(response)
 
 	if err != nil {
