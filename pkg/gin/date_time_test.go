@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	apiUrl       = "http://localhost:8080"
-	validRoute   = "/datetime"
-	invalidRoute = "/datetimes"
+	apiUrl     = "http://localhost:8080"
+	validRoute = "/datetime"
+	//invalidRoute = "/datetimes"
 )
 
 func handleTestsErrors(t *testing.T, err error) {
