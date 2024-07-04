@@ -7,7 +7,7 @@ build:
 	CGO_ENABLED=0 GOOS=linux go build -o ./${BINARY_NAME1}-server ./cmd/${BINARY_NAME1}
 
 format:
-	go fmt ...
+	go fmt ./...
 
 linter: 
 	golangci-lint run
