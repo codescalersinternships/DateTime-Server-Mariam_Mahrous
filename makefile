@@ -17,10 +17,10 @@ images:
 	docker build -f Dockerfile.${BINARY_NAME1} --tag ${BINARY_NAME1}---server .
 
 ${BINARY_NAME}:
-	docker run ${BINARY_NAME}---server
+	docker run -p 8000:8000 ${BINARY_NAME}---server 
 
 ${BINARY_NAME1}:
-	docker run ${BINARY_NAME1}--server
+	docker run -p 8080:8080 ${BINARY_NAME1}--server
 
 test:
 	go test -v ./...
