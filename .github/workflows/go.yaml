@@ -21,8 +21,8 @@ jobs:
       run: make format
 
     - name: Test
-      run: make test 
+      run: make test
 
-    - name : Run Go-linter
-      run: make linter
+   - name : Run Go-linter
+      uses: golangci/golangci-lint-action@v3
       
