@@ -23,6 +23,5 @@ jobs:
     - name: Test
       run: make test
 
-   - name : Run Go-linter
+    - name: Run Go-linter
       uses: golangci/golangci-lint-action@v3
-      
