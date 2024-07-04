@@ -16,6 +16,11 @@ images:
 	docker build -f Dockerfile.${BINARY_NAME} --tag ${BINARY_NAME}---server .
 	docker build -f Dockerfile.${BINARY_NAME1} --tag ${BINARY_NAME1}---server .
 
-container:
+${BINARY_NAME}:
 	docker run ${BINARY_NAME}---server
+
+${BINARY_NAME1}:
 	docker run ${BINARY_NAME1}--server
+
+test:
+	go test -v ./...

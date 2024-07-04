@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	apiUrl     = "http://localhost:8080"
-	validRoute = "/datetime"
-	//invalidRoute = "/datetimes"
+	apiUrl       = "http://localhost:8080"
+	validRoute   = "/datetime"
+	invalidRoute = "/datetimes"
 )
 
 func handleTestsErrors(t *testing.T, err error) {
@@ -22,14 +22,10 @@ func handleTestsErrors(t *testing.T, err error) {
 	}
 }
 
-//To-DO : Server test
-//To-Do : mocking
-//To-Do : benchmark testing
-
 func TestDateAndTime(t *testing.T) {
 	r := gin.Default()
+	r.GET("/datetime", GetDateAndTime)
 	t.Run("Valid Api url", func(*testing.T) {
-		r.GET("/datetime", GetDateAndTime)
 		req := httptest.NewRequest(
 			http.MethodGet,
 			apiUrl+validRoute,
@@ -46,9 +42,38 @@ func TestDateAndTime(t *testing.T) {
 		var response DateAndTime
 		err := json.NewDecoder(resp.Body).Decode(&response)
 		handleTestsErrors(t, err)
+		maxAcceptedTime := time.Now().Add(0 + 0 + time.Second*time.Duration(3)).Format("15:04:05")
 
-		if response.Date != time.Now().Format("2006-01-02") && response.Time != time.Now().Format("15:04:05") {
+		if response.Date != time.Now().Format("2006-01-02") && response.Time >= time.Now().Format("15:04:05") && response.Time <= maxAcceptedTime {
 			t.Errorf("expected date %s but got %s , time %s but got %s ", time.Now().Format("2006-01-02"), response.Date, time.Now().Format("15:04:05"), response.Time)
+		}
+	})
+	t.Run("invalid Api url", func(*testing.T) {
+		req := httptest.NewRequest(
+			http.MethodGet,
+			apiUrl+invalidRoute,
+			nil,
+		)
+
+		resp := httptest.NewRecorder()
+		r.ServeHTTP(resp, req)
+
+		if resp.Code != http.StatusNotFound {
+			t.Errorf("handler returned wrong status code: got %v want %v", resp.Code, http.StatusNotFound)
+		}
+	})
+	t.Run("invalid Method", func(*testing.T) {
+		req := httptest.NewRequest(
+			http.MethodPost,
+			apiUrl+validRoute,
+			nil,
+		)
+
+		resp := httptest.NewRecorder()
+		r.ServeHTTP(resp, req)
+
+		if resp.Code != http.StatusNotFound {
+			t.Errorf("handler returned wrong status code: got %v want %v", resp.Code, http.StatusNotFound)
 		}
 	})
 }
