@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	apiUrl       = "http://localhost:8080"
+	apiUrl       = "http://localhost:8000"
 	validRoute   = "/datetime"
 	invalidRoute = "/datetimes"
 )
