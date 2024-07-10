@@ -14,8 +14,12 @@ type DateAndTime struct {
 
 // An api that returns the current date and time
 func GetDateAndTime(c *gin.Context) {
-	currentDate := time.Now().Format("2006-01-02")
-	currentTime := time.Now().Format("15:04:05")
-	response := DateAndTime{Date: currentDate, Time: currentTime}
-	c.IndentedJSON(http.StatusOK, response)
+	if c.Request.Method == "GET" {
+		currentDate := time.Now().Format("2006-01-02")
+		currentTime := time.Now().Format("15:04:05")
+		response := DateAndTime{Date: currentDate, Time: currentTime}
+		c.IndentedJSON(http.StatusOK, response)
+	} else {
+		c.String(http.StatusMethodNotAllowed, "Method not allowed")
+	}
 }

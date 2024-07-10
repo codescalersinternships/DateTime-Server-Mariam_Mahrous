@@ -20,7 +20,10 @@ ${BINARY_NAME}:
 	docker run -p 8000:8000 ${BINARY_NAME}---server 
 
 ${BINARY_NAME1}:
-	docker run -p 8080:8080 ${BINARY_NAME1}--server
+	docker run -p 8080:8080 ${BINARY_NAME1}---server
+
+compose: 
+	docker compose up
 
 test:
 	go test -v ./...
